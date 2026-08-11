@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: cybersave-backend-monolith
+    env: node
+    plan: free
+    rootDir: cybersave-backend
+    buildCommand: npm run build
+    startCommand: npm run start:monolith
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        sync: false
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
