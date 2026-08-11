@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Service } from '../models/Service';
 import { ServiceCategory } from '@cybersave/shared';
 
@@ -31,6 +32,10 @@ export const listServices = async (req: Request, res: Response): Promise<void> =
 
 // ── GET /services/:id ─────────────────────────────────────────────────────────
 export const getService = async (req: Request, res: Response): Promise<void> => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(404).json({ success: false, error: 'Service not found', errorCode: 'SERVICE_NOT_FOUND' });
+    return;
+  }
   const service = await Service.findOne({ _id: req.params.id, isActive: true }).lean();
   if (!service) {
     res.status(404).json({ success: false, error: 'Service not found', errorCode: 'SERVICE_NOT_FOUND' });
@@ -58,6 +63,10 @@ export const createService = async (req: Request, res: Response): Promise<void> 
 
 // ── PATCH /services/:id — admin only ─────────────────────────────────────────
 export const updateService = async (req: Request, res: Response): Promise<void> => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(404).json({ success: false, error: 'Service not found', errorCode: 'SERVICE_NOT_FOUND' });
+    return;
+  }
   const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
