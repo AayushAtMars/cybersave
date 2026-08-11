@@ -10,7 +10,7 @@
     "dev:notification": "npm --prefix services/notification-service run dev",
     "dev:support": "npm --prefix services/support-service run dev",
     "dev": "concurrently --kill-others -n gateway,auth,application,document,payment,notification,support -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgCyan.bold,bgYellow.bold,bgRed.bold,bgWhite.bold\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:application\" \"npm run dev:document\" \"npm run dev:payment\" \"npm run dev:notification\" \"npm run dev:support\"",
-    "build": "tsc",
+    "build": "npm --prefix shared run build && tsc",
     "start:monolith": "node dist/monolith.js",
     "dev:monolith": "ts-node-dev --respawn --transpile-only monolith.ts"
   },
