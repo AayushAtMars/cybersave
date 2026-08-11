@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
-    "moduleResolution": "node",
     "lib": ["ES2022"],
     "outDir": "./dist",
     "strict": true,
@@ -10,9 +9,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
     "paths": {
-      "@cybersave/shared": ["shared/src"]
+      "@cybersave/shared": ["./shared/src"]
     }
   },
   "include": [

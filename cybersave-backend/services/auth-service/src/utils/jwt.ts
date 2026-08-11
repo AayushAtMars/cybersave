@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 
 export interface JwtPayload {
   sub: string;   // userId or operatorId
@@ -11,12 +11,12 @@ export interface JwtPayload {
 }
 
 export const signAccessToken = (sub: string, role: string): string =>
-  jwt.sign({ sub, role, jti: uuidv4() }, config.jwt.accessSecret, {
+  jwt.sign({ sub, role, jti: crypto.randomUUID() }, config.jwt.accessSecret, {
     expiresIn: config.jwt.accessExpiresIn as jwt.SignOptions['expiresIn'],
   });
 
 export const signRefreshToken = (sub: string, role: string): { token: string; jti: string } => {
-  const jti = uuidv4();
+  const jti = crypto.randomUUID();
   const token = jwt.sign({ sub, role, jti }, config.jwt.refreshSecret, {
     expiresIn: config.jwt.refreshExpiresIn as jwt.SignOptions['expiresIn'],
   });

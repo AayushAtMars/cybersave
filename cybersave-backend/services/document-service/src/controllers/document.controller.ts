@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 import { DocumentRecord } from '../models/Document';
 import { getUploadUrl, getDownloadUrl, deleteFile } from '../config/storage';
 import { RequestUploadUrlSchema } from '@cybersave/shared';
@@ -44,7 +44,7 @@ export const requestUploadUrl = async (req: Request, res: Response): Promise<voi
   }
 
   const ext = fileName.split('.').pop() ?? 'bin';
-  const storageKey = `${citizenId}/${applicationId ?? 'vault'}/${uuidv4()}.${ext}`;
+  const storageKey = `${citizenId}/${applicationId ?? 'vault'}/${crypto.randomUUID()}.${ext}`;
 
   const { signedUrl, token } = await getUploadUrl(storageKey);
 
